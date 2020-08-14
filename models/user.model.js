@@ -9,8 +9,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  profilePicture : String,
+  email: String,
+  image : String,
   bio : String
 })
 
-module.exports = { userSchema }
+const User = mongoose.model('User', userSchema)
+
+module.exports = { userSchema, User }

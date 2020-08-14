@@ -4,13 +4,17 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const route = require('./routes/index')
 
+
 //middleware
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-//
+//api route
+app.use(route)
+
+//connect to db
 mongoose.connect(
-  process.env.MONGODB_URI_LOCAL,
+  process.env.MONGODB_URI,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
