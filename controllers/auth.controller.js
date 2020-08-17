@@ -2,9 +2,9 @@ const { registerService, loginService } = require('../services/auth.services')
 const { generateJWT, verifyToken } = require('../services/token.services')
 
 const register = async (req, res) => {
-  const { username, password } = req.body
+  const { username, password, email } = req.body.user
   try {
-    let result = await registerService(username, password)
+    let result = await registerService(username, password, email)
     res.status(200).send({user: result})
   } catch (error) {
     res.status(422).send({error : error})

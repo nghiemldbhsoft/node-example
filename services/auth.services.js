@@ -1,12 +1,16 @@
 const { User } = require('../models/user.model')
 const statusMessages = require('../utils/types')
 
-const registerService = async (username, password) => {
+const registerService = async (username, password, email) => {
   const user = await User.findOne({ username: username })
   if (user) {
     throw new Error(statusMessages._422)
   } else {
-    const newUser = new User({ username: username, password: password })
+    const newUser = new User({
+      username: username,
+      password: password,
+      email: email
+    })
     return newUser.save()
   }
 }
