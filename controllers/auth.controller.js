@@ -1,5 +1,5 @@
 const { registerService, loginService } = require('../services/auth.services')
-const { generateJWT } = require('../services/token.services')
+const { generateJWT, verifyToken } = require('../services/token.services')
 
 const register = async (req, res) => {
   const { username, password } = req.body
@@ -23,4 +23,16 @@ const login = async (req, res) => {
   }
 }
 
-module.exports = { register, login }
+const loginByToken = async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1]
+    console.log("line 28" + token)
+  try {
+    let result = await verifyToken(token)
+    console.log("line31")
+    console.log(result)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { register, login, loginByToken }
