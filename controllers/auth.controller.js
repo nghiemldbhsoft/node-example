@@ -13,25 +13,26 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { username, password } = req.body
-  console.log(req.body)
   try {
     let result = await loginService(username, password) //return username
     let token = generateJWT(result)
-    res.status(200).send(token)
+    res.status(200).send({username: username, token : token})
   } catch (error) {
     res.status(422).send(error)
   }
 }
 
 const loginByToken = async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1]
-    console.log("line 28" + token)
+    const token = req.headers.authorization.split(' ')[1] //ignore "Bearer"
   try {
     let result = await verifyToken(token)
-    console.log("line31")
-    console.log(result)
+    if (result) {
+      res.status(200).send({success: true, username: result.username})
+    } else {
+      res.status(422).send({success: false, message: result})
+    }
   } catch (error) {
-    console.log(error)
+    res.status(422).send(error)
   }
 }
 
