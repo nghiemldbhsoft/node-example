@@ -10,4 +10,17 @@ const generateJWT = username => {
   return token
 }
 
-module.exports = { generateJWT }
+const verifyToken = token => {
+    let result = jwt.verify(token, process.env.SECRET_KEY, (error, tokenPayload) => {
+        if (error) {
+          console.log(error)
+          return error.message
+        } else {
+          console.log(tokenPayload)
+          return tokenPayload
+        }
+    })
+    return result
+}
+
+module.exports = { generateJWT, verifyToken }
