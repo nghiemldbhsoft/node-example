@@ -29,10 +29,15 @@ Project Structure
 -----------------
 | Name                               | Description                                                  |
 | ---------------------------------- | ------------------------------------------------------------ |
-| **controllers**                    | Controller for route all api request, response               |
+| **controllers**                    | Controller for all api request, response                     |
+| **services**                       | Api's service                                                |
 | **models**                         | Mongoose schemas and models                                  |
 | **routes**                         | All api route                                                |
-| .env.example                       | Your tokens, passwords and database URI.
+| index.js                           | The main application file.                                   |
+| .env.example                       | Your tokens, passwords and database URI.                     |
+| .gitignore                         | Folder and files ignored by git.                             |
+| package.json                       | NPM dependencies.                                            |
+| package-lock.json                  | Contains exact versions of NPM dependencies in package.json. |
 
 
 
