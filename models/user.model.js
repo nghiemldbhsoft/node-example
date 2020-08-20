@@ -6,6 +6,11 @@ function validateEmail(email) {
 }
 
 const userSchema = mongoose.Schema({
+  email: {
+    type: String,
+    validate: [validateEmail, 'Invalid email! :(']
+  },
+  token: String,
   username: {
     type: String,
     minlength: 6,
@@ -15,10 +20,6 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: 6,
     required: true
-  },
-  email: {
-    type: String,
-    validate: [validateEmail, 'Invalid email!']
   },
   image : String,
   bio : {
