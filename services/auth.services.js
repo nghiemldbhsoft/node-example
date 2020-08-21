@@ -2,11 +2,11 @@ const { User } = require('../models/user.model')
 const statusMessages = require('../utils/types')
 const { generateJWT } = require('../services/token.services')
 
-const registerService = async (username, email, password) => {
-  const user = await User.findOne({ username: username })
-  console.log('user in db yet?', user)
+const registerService = async (username, email, password, bio) => {
+  const user = await User.findOne({ email: email })
+  console.log('email in db yet?', user)
   if (user) {
-    throw new Error('Username already existed')
+    throw new Error('Email already existed')
   } else {
     let token = generateJWT(username)
     console.log(token)
@@ -15,7 +15,7 @@ const registerService = async (username, email, password) => {
       token: token,
       username: username,
       password: password,
-      bio: '',
+      bio: bio,
       image: ''
     })
     let response = await newUser.save()
@@ -31,11 +31,12 @@ const registerService = async (username, email, password) => {
   }
 }
 
-const loginService = async (username, password) => {
+const loginService = async (email, password) => {
   const user = await User.findOne({
-    username: username,
+    email: email,
     password: password
   }).select(['-password', '-_id', '-__v'])
+  console.log(user)
   if (user) {
     return user
   } else {

@@ -2,9 +2,9 @@ const { registerService, loginService } = require('../services/auth.services')
 const { verifyToken } = require('../services/token.services')
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body.user
+  const { username, email, password, bio } = req.body
   try {
-    let result = await registerService(username, email, password)
+    let result = await registerService(username, email, password, bio)
     res.status(201).send({ user: result })
   } catch (error) {
     res.status(422).send({errors: {
@@ -15,9 +15,10 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-  const { username, password } = req.body.user
+  console.log(req.body)
+  const { email, password } = req.body
   try {
-    let user = await loginService(username, password) //return username
+    let user = await loginService(email, password) //return username
     res.status(200).send({ user: user })
   } catch (error) {
     res.status(422).send(error)
