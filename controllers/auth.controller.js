@@ -21,7 +21,10 @@ const login = async (req, res) => {
     let user = await loginService(email, password) //return username
     res.status(200).send({ user: user })
   } catch (error) {
-    res.status(422).send(error)
+    res.status(422).send({errors: {
+      body: [],
+      message: error.message
+    }})
   }
 }
 
