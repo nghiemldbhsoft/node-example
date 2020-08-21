@@ -8,7 +8,7 @@ const registerService = async (username, email, password, bio) => {
   if (user) {
     throw new Error('Email already existed')
   } else {
-    let token = generateJWT(email, username)
+    let token = generateJWT(email)
     console.log(token)
     const newUser = new User({
       email: email,
