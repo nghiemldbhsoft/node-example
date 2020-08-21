@@ -3,13 +3,12 @@ const statusMessages = require('../utils/types')
 const { generateJWT } = require('../services/token.services')
 
 const registerService = async (username, email, password, bio) => {
+  //Make sure email is unique
   const user = await User.findOne({ email: email })
-  console.log('email in db yet?', user)
   if (user) {
     throw new Error('Email already existed')
   } else {
     let token = generateJWT(email)
-    console.log(token)
     const newUser = new User({
       email: email,
       token: token,
