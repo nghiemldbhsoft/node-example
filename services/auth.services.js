@@ -6,7 +6,7 @@ const registerService = async (username, email, password) => {
   const user = await User.findOne({ username: username })
   console.log('user in db yet?', user)
   if (user) {
-    throw new Error(statusMessages._422)
+    throw new Error('Username already existed')
   } else {
     let token = generateJWT(username)
     console.log(token)
