@@ -8,7 +8,8 @@ function validateEmail(email) {
 const userSchema = mongoose.Schema({
   email: {
     type: String,
-    validate: [validateEmail, 'Invalid email! :(']
+    validate: [validateEmail, 'Invalid email! :('],
+    require: true,
   },
   token: String,
   username: {
