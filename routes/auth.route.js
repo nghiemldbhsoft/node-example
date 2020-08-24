@@ -4,6 +4,6 @@ const { login, register, loginByToken } = require('../controllers/auth.controlle
 
 router.post('/', register)
 router.post('/login', login)
-router.get('/loginbytoken', loginByToken)
+router.get('/', loginByToken)
 
 module.exports = router

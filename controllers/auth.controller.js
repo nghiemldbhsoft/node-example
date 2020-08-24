@@ -1,5 +1,4 @@
-const { registerService, loginService } = require('../services/auth.services')
-const { verifyToken } = require('../services/token.services')
+const { registerService, loginService, getUserByToken } = require('../services/auth.services')
 
 const register = async (req, res) => {
   const { username, email, password, bio } = req.body
@@ -30,14 +29,20 @@ const login = async (req, res) => {
 const loginByToken = async (req, res) => {
   const token = req.headers.authorization.split(' ')[1] //ignore "Bearer"
   try {
-    let result = await verifyToken(token)
-    if (result) {
-      res.status(200).send({ success: true, username: result.username })
+    let user = await getUserByToken(token)
+    if (user) {
+      res.status(200).send({ user: user })
     } else {
-      res.status(401).send({ success: false, message: result })
+      res.status(404).send({errors: {
+        body: [],
+        message: "Not found"
+      }})
     }
   } catch (error) {
-    res.status(422).send({ error: error })
+    res.status(422).send({errors: {
+      body: [],
+      message: error.message
+    }})
   }
 }
 
