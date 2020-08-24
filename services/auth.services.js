@@ -1,6 +1,6 @@
 const { User } = require('../models/user.model')
 const statusMessages = require('../utils/types')
-const { generateJWT } = require('../services/token.services')
+const { generateJWT, verifyToken } = require('../services/token.services')
 
 const registerService = async (username, email, password, bio) => {
   //Make sure email is unique
@@ -35,7 +35,6 @@ const loginService = async (email, password) => {
     email: email,
     password: password
   }).select(['-password', '-_id', '-__v'])
-  console.log(user)
   if (user) {
     return user
   } else {
@@ -43,4 +42,14 @@ const loginService = async (email, password) => {
   }
 }
 
-module.exports = { registerService, loginService }
+const getUserByToken = async token => {
+  let tokenPayload = verifyToken(token)
+  let user = await User.findOne({ email: tokenPayload.email }).select([
+    '-password',
+    '-_id',
+    '-__v'
+  ])
+  return user
+}
+
+module.exports = { registerService, loginService, getUserByToken }
